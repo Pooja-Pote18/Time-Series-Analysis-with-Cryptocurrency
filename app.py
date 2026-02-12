@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import numpy as np
 from prophet import Prophet
@@ -55,7 +56,7 @@ if "active_page" not in st.session_state:
     st.session_state.active_page = "Home"
 
 with st.sidebar:
-    menu_items = ["Home", "Data View", "EDA","Forecasting Models","Model Evaluation"]
+    menu_items = ["Home", "Data View", "EDA","Forecasting Models","Model Evaluation","Power BI Dashboard"]
     for item in menu_items:
         is_active = st.session_state.active_page == item
         st.markdown(
@@ -364,39 +365,52 @@ elif page == "Model Evaluation":
 
 elif page == "Model Evaluation":
 
-    st.subheader("Model Evaluation Metrics")
+    st.subheader("📊 Model Evaluation Metrics")
 
-    if "model_metrics" not in st.session_state:
+    if "model_metrics" in st.session_state:
 
-        #  Store model metrics
-        results = {
-            "ARIMA": {
-                "MAE": 24260.3493,
-                "RMSE": 28347.6511,
-                "MAPE": 24.70,
-                "R2": -0.9144
-            },
-            "SARIMA": {
-                "MAE": 28442.1426,
-                "RMSE": 31586.2139,
-                "MAPE": None,
-                "R2": -2.9116
-            },
-            "Prophet": {
-                "MAE": 9520.6139,
-                "RMSE": 11219.5088,
-                "MAPE": 10.71,
-                "R2": 0.7001
-            },
-            "LSTM": {
-                "MAE": 1997.9159,
-                "RMSE": 2564.9268,
-                "MAPE": 2.03,
-                "R2": 0.9502
-            }
-        }
+        metrics_df = pd.DataFrame(st.session_state["model_metrics"])
 
-        # Convert to DataFrame
-        df = pd.DataFrame(results).T
+        # Sort by RMSE (lower is better)
+        metrics_df = metrics_df.sort_values(by="RMSE")
 
-      
+        st.dataframe(metrics_df)
+
+        # Highlight best model
+        best_model = metrics_df.iloc[0]["Model"]
+        st.success(f"🏆 Best Performing Model (Based on RMSE): {best_model}")
+
+        # Model Comparison Chart
+        st.markdown("### 📈 Model Comparison (RMSE)")
+        fig, ax = plt.subplots(figsize=(8,5))
+        ax.bar(metrics_df["Model"], metrics_df["RMSE"])
+        ax.set_ylabel("RMSE")
+        ax.set_title("Model RMSE Comparison")
+        st.pyplot(fig)
+    else:
+        st.info("Please run models in 'Forecasting Models' first.")
+
+
+        # --------------------------------------------------
+        # ADD POWER BI DASHBOARD BELOW MODEL COMPARISON
+        # --------------------------------------------------
+
+elif page == "Power BI Dashboard":
+
+    st.markdown("---")
+    st.markdown("## 📊 Interactive Power BI Dashboard")
+
+    powerbi_url = "https://app.powerbi.com/view?r=eyJrIjoiYjA3YWQyN2MtMDM4ZC00YWUxLTlkNGQtNWIxYTc2MTZiZTI1IiwidCI6IjM0YTYzMzMwLWU2MWUtNGMwZC04ODIyLTQ4MjViZTk0YTNkYiJ9"
+
+    components.iframe(
+        powerbi_url,
+        width=1200,
+        height=650
+    )
+
+
+
+
+
+
+       
