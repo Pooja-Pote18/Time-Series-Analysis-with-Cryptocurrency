@@ -72,9 +72,10 @@ LSTM	           0.95	          ⭐⭐⭐⭐⭐
 
 
 
+
 ✅ Best Performing Model:
 
-        LSTM (Deep Learning Model)
+        LSTM- Long Short-Term Memory (Deep Learning Model)
 
 
 
@@ -96,10 +97,9 @@ LSTM	           0.95	          ⭐⭐⭐⭐⭐
         
         pip install -r requirements.txt
         
-        
-        Then run:
-        
-        streamlit run app.py
+            Then run:
+            
+            streamlit run app.py
 
 
 
