@@ -61,9 +61,13 @@
 🏆 Model Performance Comparison
 
 Model	      R² Score	      Performance Rating
+
 ARIMA	      -0.91	          ⭐⭐
+
 SARIMA	    -2.91	          ⭐
+
 Prophet	     0.70	          ⭐⭐⭐⭐
+
 LSTM	       0.95	          ⭐⭐⭐⭐⭐
 
 
@@ -77,8 +81,13 @@ LSTM (Deep Learning Model)
 📦 Project Structure
 
 ├── forecasting.ipynb
+
 ├── README.md
+
 ├── requirements.txt
+
+├──app.py
+
 
 
 ▶️ How to Run
@@ -87,6 +96,7 @@ pip install -r requirements.txt
 
 
 Then run:
+
 streamlit run app.py
 
 
