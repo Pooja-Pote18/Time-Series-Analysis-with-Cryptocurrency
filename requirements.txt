@@ -1,12 +1,12 @@
-numpy
+
+streamlit==1.32.2
+protobuf==3.20.3
 pandas
+numpy
 matplotlib
 seaborn
 scikit-learn
-statsmodels
 prophet
-tensorflow==2.20.0
-mplfinance
+tensorflow
 python-binance
 plotly
-streamlit
