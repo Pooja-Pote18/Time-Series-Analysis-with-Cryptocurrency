@@ -1,6 +1,6 @@
 **📈 Cryptocurrency  Forecasting using Machine Learning & Time Series Models**
 
-   ** 🚀 Project Overview**
+    🚀 Project Overview
     
       This project focuses on forecasting cryptocurrency prices (BTC/USDT) using multiple time series and deep learning models.
       
@@ -8,7 +8,7 @@
       
 
     
-    📊** Models Implemented**
+    📊 Models Implemented
 
         ARIMA – AutoRegressive Integrated Moving Average
         
@@ -19,7 +19,7 @@
         LSTM – Long Short-Term Memory (Deep Learning Model)
 
 
-**    🔍 Exploratory Data Analysis (EDA)**
+   🔍 Exploratory Data Analysis (EDA)
 
         Data cleaning & preprocessing
         
@@ -37,7 +37,7 @@
 
 
 
-    **🧠 Machine Learning Type**
+    🧠 Machine Learning Type
         
         Supervised Learning
         
@@ -46,7 +46,7 @@
         Time Series Forecasting
         
         
-    **📐 Evaluation Metrics**
+    📐 Evaluation Metrics
         
         Models were evaluated using:
         
