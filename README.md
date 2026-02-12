@@ -71,6 +71,7 @@ Prophet	           0.70	          ⭐⭐⭐⭐
 LSTM	           0.95	          ⭐⭐⭐⭐⭐
 
 
+
 ✅ Best Performing Model:
 
         LSTM (Deep Learning Model)
@@ -91,7 +92,7 @@ LSTM	           0.95	          ⭐⭐⭐⭐⭐
 
 
 
-        ▶️ How to Run
+  ▶️ How to Run
         
         pip install -r requirements.txt
         
