@@ -19,7 +19,7 @@
         LSTM – Long Short-Term Memory (Deep Learning Model)
 
 
-   🔍 Exploratory Data Analysis (EDA)
+    🔍 Exploratory Data Analysis (EDA)
 
         Data cleaning & preprocessing
         
