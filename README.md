@@ -60,15 +60,15 @@
 
 🏆 Model Performance Comparison
 
-Model	          R² Score	      Performance Rating
-
-ARIMA	          -0.91	          ⭐⭐
-
-SARIMA	          -2.91	          ⭐
-
-Prophet	           0.70	          ⭐⭐⭐⭐
-
-LSTM	           0.95	          ⭐⭐⭐⭐⭐
+        Model	          R² Score	      Performance Rating
+        
+        ARIMA	          -0.91	          ⭐⭐
+        
+        SARIMA	          -2.91	          ⭐
+        
+        Prophet	           0.70	          ⭐⭐⭐⭐
+        
+        LSTM	           0.95	          ⭐⭐⭐⭐⭐
 
 
 
