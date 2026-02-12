@@ -18,6 +18,7 @@
         
         LSTM – Long Short-Term Memory (Deep Learning Model)
 
+
     🔍 Exploratory Data Analysis (EDA)
 
         Data cleaning & preprocessing
@@ -36,26 +37,26 @@
 
 
 
-🧠 Machine Learning Type
-
-Supervised Learning
-
-Regression Problem
-
-Time Series Forecasting
-
-
-📐 Evaluation Metrics
-
-Models were evaluated using:
-
-MAE (Mean Absolute Error)
-
-RMSE (Root Mean Squared Error)
-
-MAPE (Mean Absolute Percentage Error)
-
-R² Score (Accuracy Measure)
+    🧠 Machine Learning Type
+        
+        Supervised Learning
+        
+        Regression Problem
+        
+        Time Series Forecasting
+        
+        
+    📐 Evaluation Metrics
+        
+        Models were evaluated using:
+        
+        MAE (Mean Absolute Error)
+        
+        RMSE (Root Mean Squared Error)
+        
+        MAPE (Mean Absolute Percentage Error)
+        
+        R² Score (Accuracy Measure)
 
 🏆 Model Performance Comparison
 
@@ -72,7 +73,7 @@ LSTM (Deep Learning Model)
 
 
 
-.
+
 📦 Project Structure
 
 ├── forecasting.ipynb
