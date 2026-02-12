@@ -6,32 +6,33 @@
       
       The goal is to compare traditional statistical models with deep learning models and evaluate their forecasting performance.
       
+
     
     📊 Models Implemented
 
-ARIMA – AutoRegressive Integrated Moving Average
+        ARIMA – AutoRegressive Integrated Moving Average
+        
+        SARIMA – Seasonal ARIMA
+        
+        Prophet – Facebook’s Time Series Forecasting Model
+        
+        LSTM – Long Short-Term Memory (Deep Learning Model)
 
-SARIMA – Seasonal ARIMA
+    🔍 Exploratory Data Analysis (EDA)
 
-Prophet – Facebook’s Time Series Forecasting Model
-
-LSTM – Long Short-Term Memory (Deep Learning Model)
-
-🔍 Exploratory Data Analysis (EDA)
-
-Data cleaning & preprocessing
-
-Distribution analysis of closing price
-
-Correlation heatmap
-
-Daily returns analysis
-
-Volatility visualization
-
-Moving averages (SMA 20 & SMA 50)
-
-Candlestick chart visualization
+        Data cleaning & preprocessing
+        
+        Distribution analysis of closing price
+        
+        Correlation heatmap
+        
+        Daily returns analysis
+        
+        Volatility visualization
+        
+        Moving averages (SMA 20 & SMA 50)
+        
+        Candlestick chart visualization
 
 
 
