@@ -1,13 +1,93 @@
-This project focuses on cryptocurrency price forecasting using real-world data collected from the Binance API.
-The dataset was preprocessed and analyzed through detailed Exploratory Data Analysis (EDA) to uncover patterns in price movement, volatility, and trading volume.
+📈 Cryptocurrency Price Forecasting using Machine Learning & Time Series Models
+🚀 Project Overview
 
-A series of forecasting models were implemented and compared to identify the most accurate and best-fitting approach for the dataset.
-Model evaluation was carried out using performance metrics and visualization insights to assess accuracy and consistency.
+This project focuses on forecasting cryptocurrency prices (BTC/USDT) using multiple time series and deep learning models.
 
-To complement the analysis, Power BI dashboards were integrated to provide interactive visualizations and deeper insights into time series behavior.
+The goal is to compare traditional statistical models with deep learning models and evaluate their forecasting performance.
 
-Forecasting Models Implemented
-Prophet
-ARIMA
-LSTM (Long Short-Term Memory)
-SARIMA (Seasonal ARIMA)
+
+📊 Models Implemented
+
+ARIMA – AutoRegressive Integrated Moving Average
+
+SARIMA – Seasonal ARIMA
+
+Prophet – Facebook’s Time Series Forecasting Model
+
+LSTM – Long Short-Term Memory (Deep Learning Model)
+
+🔍 Exploratory Data Analysis (EDA)
+
+Data cleaning & preprocessing
+
+Distribution analysis of closing price
+
+Correlation heatmap
+
+Daily returns analysis
+
+Volatility visualization
+
+Moving averages (SMA 20 & SMA 50)
+
+Candlestick chart visualization
+
+
+
+🧠 Machine Learning Type
+
+Supervised Learning
+
+Regression Problem
+
+Time Series Forecasting
+
+
+📐 Evaluation Metrics
+
+Models were evaluated using:
+
+MAE (Mean Absolute Error)
+
+RMSE (Root Mean Squared Error)
+
+MAPE (Mean Absolute Percentage Error)
+
+R² Score (Accuracy Measure)
+
+🏆 Model Performance Comparison
+
+Model	      R² Score	      Performance Rating
+ARIMA	      -0.91	          ⭐⭐
+SARIMA	    -2.91	          ⭐
+Prophet	     0.70	          ⭐⭐⭐⭐
+LSTM	       0.95	          ⭐⭐⭐⭐⭐
+
+
+✅ Best Performing Model:
+
+LSTM (Deep Learning Model)
+
+
+
+.
+📦 Project Structure
+
+├── forecasting.ipynb
+├── README.md
+├── requirements.txt
+
+
+▶️ How to Run
+
+pip install -r requirements.txt
+
+
+Then run:
+streamlit run app.py
+
+
+
+
+
+
