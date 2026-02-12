@@ -1,12 +1,13 @@
-📈 Cryptocurrency Price Forecasting using Machine Learning & Time Series Models
-🚀 Project Overview
+📈 Cryptocurrency  Forecasting using Machine Learning & Time Series Models
 
-This project focuses on forecasting cryptocurrency prices (BTC/USDT) using multiple time series and deep learning models.
-
-The goal is to compare traditional statistical models with deep learning models and evaluate their forecasting performance.
-
-
-📊 Models Implemented
+    🚀 Project Overview
+    
+      This project focuses on forecasting cryptocurrency prices (BTC/USDT) using multiple time series and deep learning models.
+      
+      The goal is to compare traditional statistical models with deep learning models and evaluate their forecasting performance.
+      
+    
+    📊 Models Implemented
 
 ARIMA – AutoRegressive Integrated Moving Average
 
