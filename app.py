@@ -368,7 +368,7 @@ elif page == "Model Evaluation":
 
     if "model_metrics" not in st.session_state:
 
-        # Step 1: Store model metrics
+        #  Store model metrics
         results = {
             "ARIMA": {
                 "MAE": 24260.3493,
@@ -399,29 +399,4 @@ elif page == "Model Evaluation":
         # Convert to DataFrame
         df = pd.DataFrame(results).T
 
-        # Step 2: Rank models based on R2 score
-        df["Rank"] = df["R2"].rank(ascending=False)
-
-        # Step 3: Star Rating Function
-        def star_rating(rank):
-            if rank == 1:
-                return "⭐⭐⭐⭐⭐"
-            elif rank == 2:
-                return "⭐⭐⭐⭐"
-            elif rank == 3:
-                return "⭐⭐"
-            else:
-                return "⭐"
-
-        df["Rating"] = df["Rank"].apply(star_rating)
-
-        # Step 4: Sort by Rank
-        final_comparison = df.sort_values("Rank")
-
-        # Save to session state
-        st.session_state["model_metrics"] = final_comparison
-
-    # Display metrics table
-    st.dataframe(st.session_state["model_metrics"])
-
-    st.success("Model evaluation completed successfully!")
+      
