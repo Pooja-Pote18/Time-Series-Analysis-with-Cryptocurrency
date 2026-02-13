@@ -139,22 +139,24 @@ if page == "Home":
         """)
        
     
-    
-    with col2:
-        try:
-            image = Image.open("binance2.webp")
-            st.image(image)
-        except Exception as e:
-            st.warning(f"Image loading error: {e}")
+ 
 
-        st.markdown("---")
-           st.markdown("### <span style='color:#ffcc00;'>Team Members</span>", unsafe_allow_html=True)
-           st.markdown("""
-                   - Pooja Pote 
-                   - Anjali Kamble  
-                   - Piyush Chinde
-                   - Dnyaneshwari Gurav
-                   """)       
+   with col2:
+       try:
+           image = Image.open("binance2.webp")
+           st.image(image)
+       except Exception as e:
+           st.warning(f"Image loading error: {e}")
+   
+       st.markdown("---")
+       st.markdown("### <span style='color:#ffcc00;'>Team Members</span>", unsafe_allow_html=True)
+       st.markdown("""
+           - Pooja Pote 
+           - Anjali Kamble  
+           - Piyush Chinde
+           - Dnyaneshwari Gurav
+       """)
+
 
     # DATA VIEW
 
@@ -427,6 +429,7 @@ elif page == "Power BI Dashboard":
 
 
        
+
 
 
 
