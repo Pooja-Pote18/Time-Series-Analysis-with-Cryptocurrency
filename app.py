@@ -157,7 +157,6 @@ with col2:
 
 
     # DATA VIEW
-
 elif page == "Data View":
     st.subheader("Data View")
     if not df.empty:
@@ -427,6 +426,7 @@ elif page == "Power BI Dashboard":
 
 
        
+
 
 
 
