@@ -355,13 +355,14 @@ elif page == "Forecasting Models":
 # --------------------------------------------------
 # POWER BI
 # --------------------------------------------------
-elif page == "📊 Power BI Dashboard":
+elif page == "Power BI Dashboard":
 
     st.markdown("## Interactive Power BI Dashboard")
 
     powerbi_url = "https://app.powerbi.com/view?r=eyJrIjoiYjA3YWQyN2MtMDM4ZC00YWUxLTlkNGQtNWIxYTc2MTZiZTI1IiwidCI6IjM0YTYzMzMwLWU2MWUtNGMwZC04ODIyLTQ4MjViZTk0YTNkYiJ9"
 
     components.iframe(powerbi_url, width=1200, height=650)
+
 
 
 
