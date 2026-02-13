@@ -59,7 +59,7 @@ if "active_page" not in st.session_state:
     st.session_state.active_page = "Home"
 
 with st.sidebar:
-    menu_items = ["Home", "Data View", "EDA", "Forecasting Models", "Model Evaluation", "Power BI Dashboard"]
+    menu_items = ["Home ", "Data View ", "EDA ", "Forecasting Models ", "Model Evaluation ", "Power BI Dashboard"]
     for item in menu_items:
         if st.button(item, use_container_width=True):
             st.session_state.active_page = item
@@ -129,7 +129,7 @@ if page == "Home":
             st.warning(f"Image error: {e}")
 
         st.markdown("---")
-        st.markdown("### <span style='color:#ffcc00;'>Team Members</span>", unsafe_allow_html=True)
+        st.markdown("### <span style='color:#ffcc00;'> 👥 Team Members</span>", unsafe_allow_html=True)
         st.markdown("""
         - Pooja Pote  
         - Anjali Kamble  
@@ -291,3 +291,4 @@ elif page == "Power BI Dashboard":
     powerbi_url = "https://app.powerbi.com/view?r=eyJrIjoiYjA3YWQyN2MtMDM4ZC00YWUxLTlkNGQtNWIxYTc2MTZiZTI1IiwidCI6IjM0YTYzMzMwLWU2MWUtNGMwZC04ODIyLTQ4MjViZTk0YTNkYiJ9"
 
     components.iframe(powerbi_url, width=1200, height=650)
+
