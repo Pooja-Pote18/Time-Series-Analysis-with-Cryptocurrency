@@ -147,7 +147,7 @@ if page == "Home":
         except Exception as e:
             st.warning(f"Image loading error: {e}")
 
-       st.markdown("---")
+        st.markdown("---")
            st.markdown("### <span style='color:#ffcc00;'>Team Members</span>", unsafe_allow_html=True)
            st.markdown("""
                    - Pooja Pote 
@@ -427,6 +427,7 @@ elif page == "Power BI Dashboard":
 
 
        
+
 
 
 
