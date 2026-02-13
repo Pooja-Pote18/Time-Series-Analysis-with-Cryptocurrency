@@ -139,9 +139,7 @@ if page == "Home":
         """)
        
     
- 
-
-   with col2:
+with col2:
        try:
            image = Image.open("binance2.webp")
            st.image(image)
@@ -429,6 +427,7 @@ elif page == "Power BI Dashboard":
 
 
        
+
 
 
 
