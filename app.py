@@ -59,10 +59,21 @@ if "active_page" not in st.session_state:
     st.session_state.active_page = "Home"
 
 with st.sidebar:
-    menu_items = ["Home ", "Data View", "EDA", "Forecasting Models", "Power BI Dashboard"]
+    menu_items = ["Home", "Data View", "EDA","Forecasting Models","Model Evaluation","Power BI Dashboard"]
     for item in menu_items:
-        if st.button(item, use_container_width=True):
+        is_active = st.session_state.active_page == item
+        st.markdown(
+            f"""
+            <div style="border-radius: 8px;
+                        margin-bottom: 8px;
+                        background-color: {'#2b2f33' if is_active else 'transparent'};
+                        border-left: {'5px solid #ffcc00' if is_active else '5px solid transparent'};">
+            """,
+            unsafe_allow_html=True,
+        )
+        if st.button(item, key=f"menu_{item}", use_container_width=True):
             st.session_state.active_page = item
+        st.markdown("</div>", unsafe_allow_html=True)
 
 # --------------------------------------------------
 # DARK GREEN STYLE
@@ -351,6 +362,7 @@ elif page == "Power BI Dashboard":
     powerbi_url = "https://app.powerbi.com/view?r=eyJrIjoiYjA3YWQyN2MtMDM4ZC00YWUxLTlkNGQtNWIxYTc2MTZiZTI1IiwidCI6IjM0YTYzMzMwLWU2MWUtNGMwZC04ODIyLTQ4MjViZTk0YTNkYiJ9"
 
     components.iframe(powerbi_url, width=1200, height=650)
+
 
 
 
