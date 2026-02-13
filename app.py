@@ -110,7 +110,7 @@ page = st.session_state.active_page
 # --------------------------------------------------
 if page == "Home":
 
-    st.title("Time Series Analysis with Cryptocurrency")
+    st.title("📈 Time Series Analysis with Cryptocurrency")
 
     col1, col2 = st.columns([0.65, 0.35])
 
@@ -174,7 +174,7 @@ elif page == "Data View":
 # --------------------------------------------------
 # EDA SECTION (ALL ORIGINAL TABS)
 # --------------------------------------------------
-elif page == "EDA":
+elif page == "📊 EDA":
 
     st.subheader("Exploratory Data Analysis (EDA)")
 
@@ -250,7 +250,7 @@ elif page == "EDA":
 # FORECASTING MODELS
 # --------------------------------------------------
 
-elif page == "Forecasting Models":
+elif page == "📈 Forecasting Models":
     st.subheader("Forecasting Models")
 
     # Prophet
@@ -355,13 +355,14 @@ elif page == "Forecasting Models":
 # --------------------------------------------------
 # POWER BI
 # --------------------------------------------------
-elif page == "Power BI Dashboard":
+elif page == "📊 Power BI Dashboard":
 
     st.markdown("## Interactive Power BI Dashboard")
 
     powerbi_url = "https://app.powerbi.com/view?r=eyJrIjoiYjA3YWQyN2MtMDM4ZC00YWUxLTlkNGQtNWIxYTc2MTZiZTI1IiwidCI6IjM0YTYzMzMwLWU2MWUtNGMwZC04ODIyLTQ4MjViZTk0YTNkYiJ9"
 
     components.iframe(powerbi_url, width=1200, height=650)
+
 
 
 
