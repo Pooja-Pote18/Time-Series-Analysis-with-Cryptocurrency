@@ -9,3 +9,4 @@ plotly==5.20.0
 prophet==1.1.5
 tensorflow==2.15.0
 python-binance==1.0.19
+statsmodels
