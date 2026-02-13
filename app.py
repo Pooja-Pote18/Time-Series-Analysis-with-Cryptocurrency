@@ -59,7 +59,7 @@ if "active_page" not in st.session_state:
     st.session_state.active_page = "Home"
 
 with st.sidebar:
-    menu_items = ["Home ", "Data View ", "EDA ", "Forecasting Models ", "Model Evaluation ", "Power BI Dashboard"]
+    menu_items = ["Home ", "Data View", "EDA", "Forecasting Models", "Model Evaluation ", "Power BI Dashboard"]
     for item in menu_items:
         if st.button(item, use_container_width=True):
             st.session_state.active_page = item
@@ -106,8 +106,17 @@ if page == "Home":
     with col1:
         st.markdown("<span style='color:#ffcc00;'>Project Description</span>", unsafe_allow_html=True)
         st.write("""
-        This project focuses on cryptocurrency price forecasting using Binance API data.
-        Exploratory Data Analysis (EDA) was performed to analyze trends and volatility.
+        This project focuses on **cryptocurrency price forecasting** using real-world data collected from the **Binance API**.  
+        The dataset was **preprocessed** and analyzed through detailed **Exploratory Data Analysis (EDA)** to uncover patterns in price movement, volatility, and trading volume.
+        """)
+
+        st.write("""
+        A series of **forecasting models** were implemented and compared to identify the most accurate and best-fitting approach for the dataset.  
+        Model evaluation was carried out using **performance metrics** and **visualization insights** to assess accuracy and consistency.
+        """)
+
+        st.write("""
+        To complement the analysis, **Power BI dashboards** were integrated to provide interactive visualizations and deeper insights into time series behavior.
         """)
 
         st.markdown("#### <span style='color:#ffcc00;'>Forecasting Models Implemented</span>", unsafe_allow_html=True)
@@ -291,4 +300,5 @@ elif page == "Power BI Dashboard":
     powerbi_url = "https://app.powerbi.com/view?r=eyJrIjoiYjA3YWQyN2MtMDM4ZC00YWUxLTlkNGQtNWIxYTc2MTZiZTI1IiwidCI6IjM0YTYzMzMwLWU2MWUtNGMwZC04ODIyLTQ4MjViZTk0YTNkYiJ9"
 
     components.iframe(powerbi_url, width=1200, height=650)
+
 
