@@ -238,36 +238,106 @@ elif page == "EDA":
 # --------------------------------------------------
 # FORECASTING MODELS
 # --------------------------------------------------
-elif page == "Forecasting Models":
 
+elif page == "Forecasting Models":
     st.subheader("Forecasting Models")
 
-    if st.button("Run Forecasting Models"):
+    # Prophet
+    df_prophet = data[['timestamp', 'close']].rename(columns={'timestamp': 'ds', 'close': 'y'})
+    train_size = int(len(df_prophet) * 0.8)
+    train, test = df_prophet[:train_size], df_prophet[train_size:]
+    model_p = Prophet()
+    model_p.fit(train)
+    future = model_p.make_future_dataframe(periods=len(test), freq='D')
+    forecast = model_p.predict(future)
+    prophet_pred = forecast['yhat'][-len(test):].values
+    fig1, ax1 = plt.subplots(figsize=(6, 4))
+    ax1.plot(train['ds'], train['y'], label='Train')
+    ax1.plot(test['ds'], test['y'], label='Test', color='orange')
+    ax1.plot(test['ds'], prophet_pred, label='Prophet', color='green', linestyle='--')
+    ax1.legend(); ax1.set_title("Prophet Forecast")
+    prophet_metrics = evaluate_model(test['y'], prophet_pred, "Prophet")
 
-        df_model = df[['timestamp','close']].rename(columns={'timestamp':'ds','close':'y'})
-        train_size = int(len(df_model)*0.8)
-        train, test = df_model[:train_size], df_model[train_size:]
+    # ARIMA
+    data['timestamp'] = pd.to_datetime(data['timestamp'])
+    data.set_index('timestamp', inplace=True)
+    train_size = int(len(data) * 0.8)
+    train, test = data['close'][:train_size], data['close'][train_size:]
+    arima_fit = ARIMA(train, order=(5,1,0)).fit()
+    arima_pred = arima_fit.forecast(steps=len(test))
+    fig2, ax2 = plt.subplots(figsize=(6, 4))
+    ax2.plot(train.index, train, label='Train')
+    ax2.plot(test.index, test, label='Test', color='orange')
+    ax2.plot(test.index, arima_pred, label='ARIMA', color='green', linestyle='--')
+    ax2.legend(); ax2.set_title("ARIMA Forecast")
+    arima_metrics = evaluate_model(test, arima_pred, "ARIMA")
 
-        # Prophet
-        model_p = Prophet()
-        model_p.fit(train)
-        future = model_p.make_future_dataframe(periods=len(test))
-        forecast = model_p.predict(future)
-        prophet_pred = forecast['yhat'][-len(test):]
-        prophet_metrics = evaluate_model(test['y'], prophet_pred, "Prophet")
+    # SARIMA
+    sarima_model = SARIMAX(train, order=(2,1,2), seasonal_order=(1,1,1,12)).fit(disp=False)
+    sarima_pred = sarima_model.predict(start=len(train), end=len(data)-1, dynamic=False)
+    fig3, ax3 = plt.subplots(figsize=(6, 4))
+    ax3.plot(train.index, train, label='Train')
+    ax3.plot(test.index, test, label='Test', color='orange')
+    ax3.plot(test.index, sarima_pred, label='SARIMA', color='green', linestyle='--')
+    ax3.legend(); ax3.set_title("SARIMA Forecast")
+    sarima_metrics = evaluate_model(test, sarima_pred, "SARIMA")
 
-        # ARIMA
-        arima_model = ARIMA(train['y'], order=(5,1,0)).fit()
-        arima_pred = arima_model.forecast(steps=len(test))
-        arima_metrics = evaluate_model(test['y'], arima_pred, "ARIMA")
+    # LSTM
+    prices = data['close'].values.reshape(-1, 1)
+    scaler = MinMaxScaler()
+    scaled = scaler.fit_transform(prices)
+    split = int(len(scaled)*0.8)
+    train_data, test_data = scaled[:split], scaled[split:]
 
-        # SARIMA
-        sarima_model = SARIMAX(train['y'], order=(2,1,2), seasonal_order=(1,1,1,12)).fit(disp=False)
-        sarima_pred = sarima_model.forecast(steps=len(test))
-        sarima_metrics = evaluate_model(test['y'], sarima_pred, "SARIMA")
+    def create_dataset(ds, step=60):
+        X, y = [], []
+        for i in range(step, len(ds)):
+            X.append(ds[i-step:i, 0])
+            y.append(ds[i, 0])
+        return np.array(X), np.array(y)
 
-        st.session_state["model_metrics"] = [prophet_metrics, arima_metrics, sarima_metrics]
-        st.success("Models Trained Successfully!")
+    X_train, y_train = create_dataset(train_data)
+    X_test, y_test = create_dataset(test_data)
+    X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
+    X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
+
+    model = Sequential([
+        LSTM(50, return_sequences=True, input_shape=(X_train.shape[1], 1)),
+        LSTM(50),
+        Dense(1)
+    ])
+    model.compile(optimizer='adam', loss='mean_squared_error')
+    model.fit(X_train, y_train, epochs=10, batch_size=32, verbose=0)
+    lstm_pred = model.predict(X_test)
+    lstm_pred = scaler.inverse_transform(lstm_pred)
+    actual_prices = scaler.inverse_transform(y_test.reshape(-1, 1))
+    fig4, ax4 = plt.subplots(figsize=(6, 4))
+    ax4.plot(actual_prices, label='Actual', color='blue')
+    ax4.plot(lstm_pred, label='Predicted', color='red', linestyle='--')
+    ax4.legend(); ax4.set_title("LSTM Prediction")
+    lstm_metrics = evaluate_model(actual_prices, lstm_pred, "LSTM")
+
+    
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("#### Prophet Model")
+        st.pyplot(fig1)
+    with col2:
+        st.markdown("#### ARIMA Model")
+        st.pyplot(fig2)
+
+    col3, col4 = st.columns(2)
+    with col3:
+        st.markdown("#### SARIMA Model")
+        st.pyplot(fig3)
+    with col4:
+        st.markdown("#### LSTM Model")
+        st.pyplot(fig4)
+
+    # Save results for evaluation tab
+    st.session_state["model_metrics"] = [prophet_metrics, arima_metrics, sarima_metrics, lstm_metrics]
+
 
 # --------------------------------------------------
 # MODEL EVALUATION
@@ -300,5 +370,6 @@ elif page == "Power BI Dashboard":
     powerbi_url = "https://app.powerbi.com/view?r=eyJrIjoiYjA3YWQyN2MtMDM4ZC00YWUxLTlkNGQtNWIxYTc2MTZiZTI1IiwidCI6IjM0YTYzMzMwLWU2MWUtNGMwZC04ODIyLTQ4MjViZTk0YTNkYiJ9"
 
     components.iframe(powerbi_url, width=1200, height=650)
+
 
 
