@@ -5,6 +5,7 @@ numpy==1.26.4
 matplotlib==3.8.4
 seaborn==0.13.2
 scikit-learn==1.4.2
+Pillow==10.3.0
 plotly==5.20.0
 prophet==1.1.4
 cmdstanpy==1.2.0
@@ -12,5 +13,6 @@ tensorflow==2.15.0
 python-binance==1.0.19
 statsmodels
 mplfinance
+
 
 
