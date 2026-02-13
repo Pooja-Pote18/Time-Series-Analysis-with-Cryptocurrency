@@ -139,7 +139,7 @@ if page == "Home":
     with col2:
         img_path = "binance2.webp"
         if os.path.exists(img_path):
-            st.image(img_path, width="stretch")
+            st.image(img_path, use_container_width=True)
         else:
             st.warning(f"Image not found: {img_path}")
         
@@ -151,7 +151,8 @@ elif page == "Data View":
     if not df.empty:
         st.dataframe(df.reset_index(drop=True), height=600)
         st.write("### Summary")
-        st.dataframe(df.describe(), width="stretch")
+        st.dataframe(df.describe(), use_container_width=True)
+
     else:
         st.warning("No data loaded. Check your file path.")
 
@@ -414,3 +415,4 @@ elif page == "Power BI Dashboard":
 
 
        
+
