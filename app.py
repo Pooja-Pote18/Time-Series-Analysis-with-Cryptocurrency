@@ -12,8 +12,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 import mplfinance as mpf
-from PIL import Image
 import os
+from PIL import Image
 
 # --------------------------------------------------
 # PAGE CONFIG
@@ -33,7 +33,7 @@ DATA_PATH = "binance_crypto_data_file.csv"
 def load_data():
     try:
         df = pd.read_csv(DATA_PATH)
-        df['timestamp'] = pd.to_datetime(df['timestamp'])
+        df["timestamp"] = pd.to_datetime(df["timestamp"])
         return df
     except Exception as e:
         st.error(f"Error loading data: {e}")
@@ -64,10 +64,38 @@ with st.sidebar:
         if st.button(item, use_container_width=True):
             st.session_state.active_page = item
 
+# --------------------------------------------------
+# DARK GREEN STYLE
+# --------------------------------------------------
+st.markdown("""
+<style>
+body, .main {
+    background-color: #0f172a;
+    color: #d1fae5;
+}
+h1, h2, h3 {
+    color: #22c55e !important;
+}
+[data-testid="stSidebar"] {
+    background-color: #022c22 !important;
+}
+.stButton>button {
+    background-color: #022c22 !important;
+    color: white !important;
+    border-radius: 8px;
+    border: 1px solid #22c55e !important;
+}
+.stButton>button:hover {
+    background-color: #22c55e !important;
+    color: black !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 page = st.session_state.active_page
 
 # --------------------------------------------------
-# HOME PAGE
+# HOME
 # --------------------------------------------------
 if page == "Home":
 
@@ -76,29 +104,32 @@ if page == "Home":
     col1, col2 = st.columns([0.65, 0.35])
 
     with col1:
-        st.markdown("### 📌 Project Description")
+        st.markdown("<span style='color:#ffcc00;'>Project Description</span>", unsafe_allow_html=True)
         st.write("""
-        This project performs cryptocurrency price forecasting using Binance data.
-        Models implemented include Prophet, ARIMA, SARIMA, and LSTM.
+        This project focuses on cryptocurrency price forecasting using Binance API data.
+        Exploratory Data Analysis (EDA) was performed to analyze trends and volatility.
         """)
 
-        st.markdown("### 📈 Forecasting Models")
+        st.markdown("#### <span style='color:#ffcc00;'>Forecasting Models Implemented</span>", unsafe_allow_html=True)
         st.markdown("""
         - Prophet  
         - ARIMA  
-        - SARIMA  
-        - LSTM
+        - LSTM  
+        - SARIMA
         """)
 
     with col2:
         try:
-            image = Image.open("binance2.webp")
-            st.image(image, use_column_width=True)
-        except:
-            st.warning("Image not found.")
+            if os.path.exists("binance2.webp"):
+                image = Image.open("binance2.webp")
+                st.image(image, use_column_width=True)
+            else:
+                st.warning("Image not found.")
+        except Exception as e:
+            st.warning(f"Image error: {e}")
 
         st.markdown("---")
-        st.markdown("### 👥 Team Members")
+        st.markdown("### <span style='color:#ffcc00;'>Team Members</span>", unsafe_allow_html=True)
         st.markdown("""
         - Pooja Pote  
         - Anjali Kamble  
@@ -110,42 +141,89 @@ if page == "Home":
 # DATA VIEW
 # --------------------------------------------------
 elif page == "Data View":
-    st.subheader("Dataset")
+
+    st.subheader("Data View")
+
     if not df.empty:
         st.dataframe(df, use_container_width=True)
-        st.subheader("Summary Statistics")
+        st.subheader("Summary")
         st.dataframe(df.describe(), use_container_width=True)
     else:
-        st.warning("Dataset not loaded.")
+        st.warning("No data loaded.")
 
 # --------------------------------------------------
-# EDA
+# EDA SECTION (ALL ORIGINAL TABS)
 # --------------------------------------------------
 elif page == "EDA":
 
-    st.subheader("Exploratory Data Analysis")
+    st.subheader("Exploratory Data Analysis (EDA)")
 
     if df.empty:
-        st.warning("Dataset not loaded.")
+        st.warning("No data loaded.")
     else:
 
-        tab1, tab2, tab3 = st.tabs(["Price Trend", "Volume Trend", "Correlation Heatmap"])
+        tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
+            "Closing Price Distribution",
+            "Closing Price Trend",
+            "Volume Trend",
+            "Candlestick Charts",
+            "Correlation Heatmap",
+            "Volatility & Moving Averages",
+            "Monthly Boxplot"
+        ])
 
+        # 1 Distribution
         with tab1:
-            fig, ax = plt.subplots()
-            ax.plot(df['timestamp'], df['close'])
+            fig, ax = plt.subplots(figsize=(7,4))
+            ax.hist(data['close'], bins=30)
+            ax.set_title("Distribution of Closing Prices")
+            st.pyplot(fig)
+
+        # 2 Trend
+        with tab2:
+            fig, ax = plt.subplots(figsize=(10,5))
+            ax.plot(data['timestamp'], data['close'])
             ax.set_title("Closing Price Over Time")
             st.pyplot(fig)
 
-        with tab2:
-            fig, ax = plt.subplots()
-            ax.plot(df['timestamp'], df['volume'])
+        # 3 Volume
+        with tab3:
+            fig, ax = plt.subplots(figsize=(10,5))
+            ax.plot(data['timestamp'], data['volume'])
             ax.set_title("Volume Trend")
             st.pyplot(fig)
 
-        with tab3:
-            fig, ax = plt.subplots()
+        # 4 Candlestick
+        with tab4:
+            df_candle = df.copy()
+            df_candle.set_index("timestamp", inplace=True)
+            candle_data = df_candle[['open','high','low','close','volume']]
+            fig, _ = mpf.plot(candle_data, type='candle', style='yahoo', returnfig=True)
+            st.pyplot(fig)
+
+        # 5 Heatmap
+        with tab5:
+            fig, ax = plt.subplots(figsize=(8,5))
             sns.heatmap(df.corr(numeric_only=True), annot=True, cmap="coolwarm", ax=ax)
+            st.pyplot(fig)
+
+        # 6 Volatility
+        with tab6:
+            df_vol = df.copy()
+            df_vol['daily_return'] = df_vol['close'].pct_change()
+            fig, ax = plt.subplots(figsize=(8,4))
+            ax.plot(df_vol['daily_return'])
+            ax.set_title("Daily Returns")
+            st.pyplot(fig)
+
+        # 7 Boxplot
+        with tab7:
+            df_box = df.copy()
+            df_box['Month'] = df_box['timestamp'].dt.month_name()
+            df_box['daily_return'] = df_box['close'].pct_change()
+            fig, ax = plt.subplots(figsize=(9,5))
+            sns.boxplot(x='Month', y='daily_return', data=df_box, ax=ax)
+            ax.tick_params(axis='x', rotation=45)
             st.pyplot(fig)
 
 # --------------------------------------------------
@@ -153,12 +231,12 @@ elif page == "EDA":
 # --------------------------------------------------
 elif page == "Forecasting Models":
 
-    st.subheader("Run Forecasting Models")
+    st.subheader("Forecasting Models")
 
-    if st.button("Run Models"):
+    if st.button("Run Forecasting Models"):
 
-        df_model = df[['timestamp', 'close']].rename(columns={'timestamp': 'ds', 'close': 'y'})
-        train_size = int(len(df_model) * 0.8)
+        df_model = df[['timestamp','close']].rename(columns={'timestamp':'ds','close':'y'})
+        train_size = int(len(df_model)*0.8)
         train, test = df_model[:train_size], df_model[train_size:]
 
         # Prophet
@@ -166,7 +244,7 @@ elif page == "Forecasting Models":
         model_p.fit(train)
         future = model_p.make_future_dataframe(periods=len(test))
         forecast = model_p.predict(future)
-        prophet_pred = forecast['yhat'][-len(test):].values
+        prophet_pred = forecast['yhat'][-len(test):]
         prophet_metrics = evaluate_model(test['y'], prophet_pred, "Prophet")
 
         # ARIMA
@@ -179,45 +257,7 @@ elif page == "Forecasting Models":
         sarima_pred = sarima_model.forecast(steps=len(test))
         sarima_metrics = evaluate_model(test['y'], sarima_pred, "SARIMA")
 
-        # LSTM
-        prices = df['close'].values.reshape(-1, 1)
-        scaler = MinMaxScaler()
-        scaled = scaler.fit_transform(prices)
-        split = int(len(scaled)*0.8)
-        train_data, test_data = scaled[:split], scaled[split:]
-
-        def create_dataset(ds, step=60):
-            X, y = [], []
-            for i in range(step, len(ds)):
-                X.append(ds[i-step:i, 0])
-                y.append(ds[i, 0])
-            return np.array(X), np.array(y)
-
-        X_train, y_train = create_dataset(train_data)
-        X_test, y_test = create_dataset(test_data)
-
-        X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
-        X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
-
-        model = Sequential([
-            LSTM(50, return_sequences=True, input_shape=(X_train.shape[1], 1)),
-            LSTM(50),
-            Dense(1)
-        ])
-
-        model.compile(optimizer='adam', loss='mean_squared_error')
-        model.fit(X_train, y_train, epochs=5, batch_size=32, verbose=0)
-
-        lstm_pred = model.predict(X_test)
-        lstm_pred = scaler.inverse_transform(lstm_pred)
-        actual = scaler.inverse_transform(y_test.reshape(-1, 1))
-
-        lstm_metrics = evaluate_model(actual, lstm_pred, "LSTM")
-
-        st.session_state["model_metrics"] = [
-            prophet_metrics, arima_metrics, sarima_metrics, lstm_metrics
-        ]
-
+        st.session_state["model_metrics"] = [prophet_metrics, arima_metrics, sarima_metrics]
         st.success("Models Trained Successfully!")
 
 # --------------------------------------------------
@@ -225,32 +265,28 @@ elif page == "Forecasting Models":
 # --------------------------------------------------
 elif page == "Model Evaluation":
 
-    st.subheader("Model Evaluation")
+    st.subheader("Model Evaluation Metrics")
 
     if "model_metrics" in st.session_state:
-
         metrics_df = pd.DataFrame(st.session_state["model_metrics"])
         metrics_df = metrics_df.sort_values(by="RMSE")
-
         st.dataframe(metrics_df, use_container_width=True)
 
         best_model = metrics_df.iloc[0]["Model"]
-        st.success(f"🏆 Best Model (Lowest RMSE): {best_model}")
+        st.success(f"Best Model (Lowest RMSE): {best_model}")
 
         fig, ax = plt.subplots()
         ax.bar(metrics_df["Model"], metrics_df["RMSE"])
-        ax.set_ylabel("RMSE")
         st.pyplot(fig)
-
     else:
-        st.info("Please run models first.")
+        st.info("Run Forecasting Models first.")
 
 # --------------------------------------------------
-# POWER BI DASHBOARD
+# POWER BI
 # --------------------------------------------------
 elif page == "Power BI Dashboard":
 
-    st.markdown("## 📊 Interactive Power BI Dashboard")
+    st.markdown("## Interactive Power BI Dashboard")
 
     powerbi_url = "https://app.powerbi.com/view?r=eyJrIjoiYjA3YWQyN2MtMDM4ZC00YWUxLTlkNGQtNWIxYTc2MTZiZTI1IiwidCI6IjM0YTYzMzMwLWU2MWUtNGMwZC04ODIyLTQ4MjViZTk0YTNkYiJ9"
 
