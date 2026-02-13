@@ -59,7 +59,7 @@ if "active_page" not in st.session_state:
     st.session_state.active_page = "Home"
 
 with st.sidebar:
-    menu_items = ["Home ", "Data View", "EDA", "Forecasting Models", "Model Evaluation ", "Power BI Dashboard"]
+    menu_items = ["Home ", "Data View", "EDA", "Forecasting Models", "Power BI Dashboard"]
     for item in menu_items:
         if st.button(item, use_container_width=True):
             st.session_state.active_page = item
@@ -339,26 +339,7 @@ elif page == "Forecasting Models":
     st.session_state["model_metrics"] = [prophet_metrics, arima_metrics, sarima_metrics, lstm_metrics]
 
 
-# --------------------------------------------------
-# MODEL EVALUATION
-# --------------------------------------------------
-elif page == "Model Evaluation":
 
-    st.subheader("Model Evaluation Metrics")
-
-    if "model_metrics" in st.session_state:
-        metrics_df = pd.DataFrame(st.session_state["model_metrics"])
-        metrics_df = metrics_df.sort_values(by="RMSE")
-        st.dataframe(metrics_df, use_container_width=True)
-
-        best_model = metrics_df.iloc[0]["Model"]
-        st.success(f"Best Model (Lowest RMSE): {best_model}")
-
-        fig, ax = plt.subplots()
-        ax.bar(metrics_df["Model"], metrics_df["RMSE"])
-        st.pyplot(fig)
-    else:
-        st.info("Run Forecasting Models first.")
 
 # --------------------------------------------------
 # POWER BI
@@ -370,6 +351,7 @@ elif page == "Power BI Dashboard":
     powerbi_url = "https://app.powerbi.com/view?r=eyJrIjoiYjA3YWQyN2MtMDM4ZC00YWUxLTlkNGQtNWIxYTc2MTZiZTI1IiwidCI6IjM0YTYzMzMwLWU2MWUtNGMwZC04ODIyLTQ4MjViZTk0YTNkYiJ9"
 
     components.iframe(powerbi_url, width=1200, height=650)
+
 
 
 
