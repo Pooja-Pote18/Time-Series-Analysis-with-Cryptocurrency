@@ -59,7 +59,7 @@ if "active_page" not in st.session_state:
     st.session_state.active_page = "Home"
 
 with st.sidebar:
-    menu_items = ["Home", "Data View", "EDA","Forecasting Models","Model Evaluation","Power BI Dashboard"]
+    menu_items = ["Home", "Data View", "EDA","Forecasting Models","Power BI Dashboard"]
     for item in menu_items:
         is_active = st.session_state.active_page == item
         st.markdown(
@@ -362,6 +362,7 @@ elif page == "Power BI Dashboard":
     powerbi_url = "https://app.powerbi.com/view?r=eyJrIjoiYjA3YWQyN2MtMDM4ZC00YWUxLTlkNGQtNWIxYTc2MTZiZTI1IiwidCI6IjM0YTYzMzMwLWU2MWUtNGMwZC04ODIyLTQ4MjViZTk0YTNkYiJ9"
 
     components.iframe(powerbi_url, width=1200, height=650)
+
 
 
 
