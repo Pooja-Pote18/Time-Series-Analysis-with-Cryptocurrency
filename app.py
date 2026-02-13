@@ -14,6 +14,8 @@ from tensorflow.keras.layers import LSTM, Dense
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 import mplfinance as mpf
 import os
+from PIL import Image
+   
 
 # --------------------------------------------------
 # PAGE CONFIG
@@ -136,12 +138,15 @@ if page == "Home":
         - SARIMA (Seasonal ARIMA)
         """)
        
+    
+    
     with col2:
-        img_path = "binance2.webp"
-        if os.path.exists(img_path):
-            st.image(img_path, use_container_width=True)
-        else:
-            st.warning(f"Image not found: {img_path}")
+        try:
+            image = Image.open("binance2.webp")
+            st.image(image)
+        except Exception as e:
+            st.warning(f"Image loading error: {e}")
+
         
 
     # DATA VIEW
@@ -415,4 +420,5 @@ elif page == "Power BI Dashboard":
 
 
        
+
 
